@@ -1,10 +1,10 @@
 'use strict'
+require('dotenv').config();
 
 const express = require('express');
 const superagent = require('superagent');
 
 require('ejs');
-require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -33,7 +33,7 @@ app.post('/searches', (request, response) => {
   }else if(titleOrAuthor === 'author'){
     url+=`+inauthor:${query}`;
   }
-console.log(url)
+// console.log(url)
   superagent.get(url)
     .then(result => {
       let bookArray = result.body.items;
