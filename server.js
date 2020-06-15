@@ -1,13 +1,15 @@
 'use strict'
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var cors= require('cors');
-var path = require('path')
-
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors= require('cors');
+const path = require('path');
+const superagent = require('superagent');
+require('ejs');
+require('dotenv').config();
 const PORT = process.env.PORT || 3001;
 
-var app = express();
+const app = express();
 
 app.use(bodyParser());
 app.use(cors());
