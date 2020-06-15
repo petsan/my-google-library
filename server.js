@@ -1,7 +1,5 @@
 'use strict'
 
-const PORT = process.env.PORT || 3001;
-
 const express = require('express');
 const superagent = require('superagent');
 
@@ -9,12 +7,18 @@ require('ejs');
 require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 3001;
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.get('/', (request, response) => {
+  response.render('index.ejs');
+});
+
+app.post('/searches', (request, response) => {
+
   let query = request.body.search[0];
   let titleOrAuthor = request.body.search[1];
 
@@ -38,7 +42,7 @@ app.get('/', (request, response) => {
 })
 
 function Book(info) {
-  // const placdholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
+  // const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
   this.title = info.title ? info.title : 'no title available';
 }
 
