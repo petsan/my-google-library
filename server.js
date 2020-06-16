@@ -14,9 +14,26 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.get('/', (request, response) => {
-  response.render('index.ejs');
-});
+app.get('/', getBooks);
+function getBooks(request, response){
+  let sql = 'SELECT * FROM books;';
+  client.query(sql)
+    .then(sqlResults => {
+      let books = sqlResults.rows;
+      console.log(books)
+      response.status(200).render('index.ejs', {myBooks: books})
+    })
+}
+
+// app.get('/', (request, response) => {
+//   let sql = 'SELECT * FROM books;';
+//   client.query(sql)
+//     .then(sqlResutls => {
+//       let books = sqlResutls.rows;
+//       response.status(200).render('index.ejs', {myBooks: books})
+//     })
+// }
+
 
 app.get('/searches/new', (request, response) => {
   response.render('searches/new.ejs');
@@ -51,9 +68,11 @@ function Book(info) {
   this.title = info.title ? info.title : 'no title available';
   this.authors = info.authors ? info.authors : 'no authors available';
   this.description = info.description ? info.description : 'no description available';
-  this.imagelinks = info.imageLinks.thumbnail ? info.imageLinks.thumbnail : placeholderImage;
+  this.thumbnail = info.imageLinks.thumbnail ? info.imageLinks.thumbnail : placeholderImage;
 }
 
-app.listen(PORT, () => {
-  console.log(`heard on ${PORT}`);
+const client = new pg.Client(process.env.DATABASE_URL);
+client.on('error', err => console.log(err));
+client.connect().then(() => {
+  app.listen(PORT, () => console.log(`heard on ${PORT}`));
 });

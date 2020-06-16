@@ -7,9 +7,30 @@
   <link rel="stylesheet" href="styles/style.css">
   <title>Book Collection</title>
 </head>
-<body>
+<!-- <body>
   <main>
     <h4>My Book Collection</h4>
   </main>
-</body>
+</body> -->
+<body>
+    <section>
+      <% myBooks.forEach(book => { %>
+        <form action="addBook" method="post"></form>
+        <div>
+          <span><%= book.title %></span>
+          <span><%= book.authors %></span>
+          <span><%= book.description %></span>
+          <img src="<%= book.thumbnail %>"></img>
+          <a href="/books/<%= book.id %>">show details</a>
+        </div>
+        <input type=hidden name="title" value=<%=book.title%> />
+        <input type=hidden name="authors" value=<%=book.authors%> />
+        <input type=hidden name="description" value=<%=book.description%> />
+        <input type=hidden name="thumbnail" value=<%=book.thumbnail%> />
+        <button>add to my favorites</button>
+      </form>
+      <% }) %>
+  </section>
+  </body>
+
 </html>
