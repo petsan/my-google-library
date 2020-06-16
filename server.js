@@ -3,7 +3,8 @@ require('dotenv').config();
 
 const express = require('express');
 const superagent = require('superagent');
-
+const pg = require('pg');
+require('dotenv').config();
 require('ejs');
 
 const app = express();
@@ -17,11 +18,11 @@ app.get('/', (request, response) => {
   response.render('index.ejs');
 });
 
-app.get('/new', (request, response) => {
+app.get('/searches/new', (request, response) => {
   response.render('searches/new.ejs');
 });
 
-app.post('/searches', (request, response) => {
+app.post('/searches/new', (request, response) => {
   console.log(request.body);
   let query = request.body.search[0];
   let titleOrAuthor = request.body.search[1];
@@ -46,8 +47,11 @@ app.post('/searches', (request, response) => {
 })
 
 function Book(info) {
-  // const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
+  const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
   this.title = info.title ? info.title : 'no title available';
+  this.authors = info.authors ? info.authors : 'no authors available';
+  this.description = info.description ? info.description : 'no description available';
+  this.imagelinks = info.imageLinks.thumbnail ? info.imageLinks.thumbnail : placeholderImage;
 }
 
 app.listen(PORT, () => {
