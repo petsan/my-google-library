@@ -15,9 +15,9 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.get('/', getBooks);
+app.get('/books/:book_id', getOneBook);
 app.get('/add', showAddForm);
 app.post('/add', addBook);
-app.get('/books/:book_id', getOneBook);
 
 function getBooks(request, response){
   let sql = 'SELECT * FROM books;';
@@ -42,7 +42,7 @@ function getOneBook(request, response){
 
 function addBook(request, response){
   let {title, authors, description, thumbnail} = request.body;
-  let sql = `INSERT INTO books (title, authors, description, thumbnail) VALUES ($1, $2, $3, $4) RETURNING ID;`;
+  let sql = `INSERT INTO books (title, authors, description, thumbnail) VALUES ($1, $2, $3, $4) RETURNING id;`;
   let safeValues = [title, authors, description, thumbnail];
   client.query(sql, safeValues)
     .then(results => {
