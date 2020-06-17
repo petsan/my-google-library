@@ -11,7 +11,7 @@
     <section>
       <% myBooks.forEach(book => { %>
         <form action="addBook" method="post"></form>
-        <% let count = 0 %>
+
         <div>
             <img src="<%= book.thumbnail %>"></img>
             <h2><%= book.title %></h2>
@@ -19,14 +19,11 @@
           <p><%= book.description %></p>
 
           <a href="/books/<%= book.id %>">show details</a>
-          <% count++; %>
+
         </div>
-        <div><% count; %></div>
-        <input type=hidden name="title" value=<%=book.title%> />
-        <input type=hidden name="authors" value=<%=book.authors%> />
-        <input type=hidden name="description" value=<%=book.description%> />
-        <input type=hidden name="thumbnail" value=<%=book.thumbnail%> />
-        <button>add to my favorites</button>
+
+
+
       </form>
       <% }) %>
   </section>
