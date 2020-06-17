@@ -15,6 +15,10 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.get('/', getBooks);
+app.get('/add', showAddForm);
+app.post('/add', addBook);
+app.get('/books/:book_id', getOneBook);
+
 function getBooks(request, response){
   let sql = 'SELECT * FROM books;';
   client.query(sql)
@@ -25,15 +29,31 @@ function getBooks(request, response){
     })
 }
 
-// app.get('/', (request, response) => {
-//   let sql = 'SELECT * FROM books;';
-//   client.query(sql)
-//     .then(sqlResutls => {
-//       let books = sqlResutls.rows;
-//       response.status(200).render('index.ejs', {myBooks: books})
-//     })
-// }
+function getOneBook(request, response){
+  let myBookId = request.params.book_id;
+  let sql = `SELECT * FROM books WHERE id = $1;`;
+  let safeValues = [myBookId];
+  client.query(sql, safeValues)
+    .then(sqlResults => {
+      console.log(sqlResults.rows[0]);
+      response.status(200).render('details.ejs', {oneBook: sqlResults.rows[0]});
+    })
+}
 
+function addBook(request, response){
+  let {title, authors, description, thumbnail} = request.body;
+  let sql = `INSERT INTO books (title, authors, description, thumbnail) VALUES ($1, $2, $3, $4) RETURNING ID;`;
+  let safeValues = [title, authors, description, thumbnail];
+  client.query(sql, safeValues)
+    .then(results => {
+      console.log(results.rows);
+      response.redirect(`/books/${id}`)
+    })
+}
+
+function showAddForm(request, response){
+  response.status(200).render('add.ejs');
+}
 
 app.get('/searches/new', (request, response) => {
   response.render('searches/new.ejs');
@@ -51,11 +71,9 @@ app.post('/searches/new', (request, response) => {
   }else if(titleOrAuthor === 'author'){
     url+=`+inauthor:${query}`;
   }
-// console.log(url)
   superagent.get(url)
     .then(result => {
       let bookArray = result.body.items;
-
       const finalBookArray = bookArray.map(book => {
         return new Book(book.volumeInfo);
       })

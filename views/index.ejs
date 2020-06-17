@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="styles/style.css">
   <title>Book Collection</title>
 </head>
 <body>
+  <header>
+    <a href="searches/new">find me</a>
+  </header>
     <section>
       <% myBooks.forEach(book => { %>
         <form action="addBook" method="post"></form>
+        <% let count = 0 %>
         <div>
-          <span><%= book.title %></span>
-          <span><%= book.authors %></span>
-          <span><%= book.description %></span>
-          <img src="<%= book.thumbnail %>"></img>
+            <img src="<%= book.thumbnail %>"></img>
+            <h2><%= book.title %></h2>
+          <h4><%= book.authors %></h4>
+          <p><%= book.description %></p>
+
           <a href="/books/<%= book.id %>">show details</a>
+          <% count++; %>
         </div>
+        <div><% count; %></div>
         <input type=hidden name="title" value=<%=book.title%> />
         <input type=hidden name="authors" value=<%=book.authors%> />
         <input type=hidden name="description" value=<%=book.description%> />
