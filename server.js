@@ -117,7 +117,7 @@ function updateBook(request, response){
   client.query(sql, safeValues)
     .then(sqlResults => {
       // redirect to teh detail page with the new values
-      response.redirect(`/tasks/${bookId}`);
+      response.redirect(`/books/${bookId}`);
     }).catch(error => console.error(error))
 }
 
