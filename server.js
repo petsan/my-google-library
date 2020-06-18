@@ -126,9 +126,9 @@ function deleteBook(request, response){
   console.log('this is our params', request.params); //{ bookId: '3' }
   let bookId = request.params.bookId;
   console.log('form information to be updated', request.body);
-  let { title, authors, description, thumbnail, isbn, bookshelf } = request.body;
-  let sql = 'DELETE movie SET title=$1, authors=$2, description=$3, thumbnail=$4, isbn=$5, bookshelf=$6 WHERE id=$7;';
-  let safeValues = [title, authors, description, thumbnail, isbn, bookshelf, bookId];
+  // let { title, authors, description, thumbnail, isbn, bookshelf } = request.body;
+  let sql = 'DELETE books WHERE id=$ 1;';
+  let safeValues = [bookId];
   // update the database with the new information
 
   client.query(sql, safeValues)
