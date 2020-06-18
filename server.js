@@ -111,7 +111,7 @@ function updateBook(request, response){
   //'UPDATE movies SET title, authors, description, thumbnail, isbn, bookshelf WHERE id=$7;';
 
   let sql = 'UPDATE books SET title=$1, authors=$2, description=$3, thumbnail=$4, isbn=$5, bookshelf=$6 WHERE id=$7;';
-  let safeValues = [title, authors, description, thumbnail, bookId, isbn, bookshelf, bookId];
+  let safeValues = [title, authors, description, thumbnail, isbn, bookshelf, bookId];
   // update the database with the new information
 
   client.query(sql, safeValues)
@@ -127,8 +127,8 @@ function deleteBook(request, response){
   let bookId = request.params.bookId;
   console.log('form information to be updated', request.body);
   let { title, authors, description, thumbnail, isbn, bookshelf } = request.body;
-  let sql = 'DELETE tasks SET title=$1, authors=$2, description=$3, thumbnail=$4, isbn=$5, bookshelf=$6, WHERE bookId=$7;';
-  let safeValues = [title, authors, description, thumbnail, bookId, isbn, bookshelf];
+  let sql = 'DELETE movie SET title=$1, authors=$2, description=$3, thumbnail=$4, isbn=$5, bookshelf=$6 WHERE id=$7;';
+  let safeValues = [title, authors, description, thumbnail, isbn, bookshelf, bookId];
   // update the database with the new information
 
   client.query(sql, safeValues)
