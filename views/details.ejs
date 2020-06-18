@@ -10,22 +10,20 @@
   </header>
     <img src="<%= oneBook.thumbnail %>" alt=""></img>
     <h2><%= oneBook.title %></h2>
-    <h2><%= oneBook.id %></h2>
-    <p><%= oneBook.authors %></p>
+    <p>By: <%= oneBook.authors %></p>
     <p><%= oneBook.description %></p>
-    <p><%= oneBook.isbn %></p>
-    <p><%= oneBook.bookshelf %></p>
+    <p>ISBN: <%= oneBook.isbn %></p>
+    <p>Genre: <%= oneBook.bookshelf %></p>
     <div>
       <button>edit</button>
       <button>delete</button>
     </div>
     <form action="/update/<%= oneBook.id %>?_method=PUT" method="post">
-      <input type="text" name="" value="<%- oneBook.title %>" placholder="">
-      <input type="text" name="" value="<%- oneBook.id %>" placholder="">
-      <input type="text" name="" value="<%- oneBook.authors %>" placholder="">
-      <input type="text" name="" value="<%- oneBook.description %>" placholder="">
-      <input type="text" name="" value="<%- oneBook.isbn %>" placholder="">
-      <input type="text" name="" value="<%- oneBook.bookshelf %>" placholder="">
+      <input type="text" name="" value="<%- oneBook.title %>" placholder="<%- oneBook.title %>">
+      <input type="text" name="" value="<%- oneBook.authors %>" placholder="<%- oneBook.authors %>">
+      <input type="text" name="" value="<%- oneBook.description %>" placholder="<%- oneBook.description %>">
+      <input type="text" name="" value="<%- oneBook.isbn %>" placholder="<%- oneBook.isbn %>">
+      <input type="text" name="" value="<%- oneBook.bookshelf %>" placholder="<%- oneBook.bookshelf %>">
       <button>submit</button>
     </form>
     <a href="/">Return to home</a>
