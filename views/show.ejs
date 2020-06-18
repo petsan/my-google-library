@@ -9,11 +9,23 @@
 <body>
   <main>
     <% searchResults.forEach( book => { %>
-      <img src="<%= book.thumbnail %>"></img>
-      <h4><%= book.title %></h4>
-      <h5><%= book.author %></h5>
-      <p><%= book.description %></p>
+      <form action="/add" method="POST">
+        <img src="<%= book.thumbnail %>"></img>
+        <h4><%= book.title %></h4>
+        <h5><%= book.author %></h5>
+        <p><%= book.description %></p>
+        <p><%= book.isbn %></p>
+        <p><%= book.bookshelf %></p>
+        <input type=hidden name="title" value="<%=book.title%>" />
+        <input type=hidden name="authors" value="<%=book.authors%>" />
+        <input type=hidden name="description" value="<%=book.description%>" />
+        <input type=hidden name="thumbnail" value="<%=book.thumbnail%>" />
+        <input type=hidden name="isbn" value="<%=book.isbn%>" />
+        <input type=hidden name="bookshelf" value="<%=book.categories%>" />
+        <button>Save Me</button>
+      </form>
     <% }) %>
   </main>
 </body>
 </html>
+
