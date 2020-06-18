@@ -105,8 +105,9 @@ function updateBook(request, response){
   // collect the information that needs to be updated
   console.log('this is our params', request.params); //{ bookId: '3' }
   let bookId = request.params.bookId;
+  console.log('this is the request object: ', request); //request.body = {} !!! form information to be updated {}
 
-  console.log('form information to be updated', request.body); //request.body = {}!!!
+  console.log('form information to be updated', request.body); //request.body = {} !!! form information to be updated {}
   let { title, authors, description, thumbnail, isbn, bookshelf } = request.body;
   //'UPDATE movies SET title, authors, description, thumbnail, isbn, bookshelf WHERE id=$7;';
 
