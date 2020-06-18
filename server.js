@@ -9,7 +9,7 @@ require('ejs');
 const methodOverride = require('method-override');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static('public'));
@@ -107,19 +107,19 @@ function updateBook(request, response){
   let bookId = request.params.bookId;
   console.log('this is the request object: ', request); //request.body = {} !!! form information to be updated {}
 
-  // console.log('form information to be updated', request.body); //request.body = {} !!! form information to be updated {}
-  // let { title, authors, description, thumbnail, isbn, bookshelf } = request.body;
-  // //'UPDATE movies SET title, authors, description, thumbnail, isbn, bookshelf WHERE id=$7;';
+  console.log('form information to be updated', request.body); //request.body = {} !!! form information to be updated {}
+  let { title, authors, description, thumbnail, isbn, bookshelf } = request.body;
+  //'UPDATE movies SET title, authors, description, thumbnail, isbn, bookshelf WHERE id=$7;';
 
-  // let sql = 'UPDATE books SET title=$1, authors=$2, description=$3, thumbnail=$4, isbn=$5, bookshelf=$6 WHERE id=$7;';
-  // let safeValues = [title, authors, description, thumbnail, isbn, bookshelf, bookId];
-  // // update the database with the new information
+  let sql = 'UPDATE books SET title=$1, authors=$2, description=$3, thumbnail=$4, isbn=$5, bookshelf=$6 WHERE id=$7;';
+  let safeValues = [title, authors, description, thumbnail, isbn, bookshelf, bookId];
+  // update the database with the new information
 
-  // client.query(sql, safeValues)
-  //   .then(sqlResults => {
-  //     // redirect to teh detail page with the new values
-  //     response.redirect(`/books/${bookId}`);
-  //   }).catch(error => console.error(error))
+  client.query(sql, safeValues)
+    .then(sqlResults => {
+      // redirect to teh detail page with the new values
+      response.redirect(`/books/${bookId}`);
+    }).catch(error => console.error(error))
 }
 
 function deleteBook(request, response){
