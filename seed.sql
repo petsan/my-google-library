@@ -1,2 +1,2 @@
-INSERT INTO books (title, authors, description, thumbnail) VALUES ('The way things aught to be', 'Sherman William', 'This is some long boring text', 'https://i.imgur.com/J5LVHEL.jpg');
-INSERT INTO books (title, authors, description, thumbnail) VALUES ('The way things aught to be 2', 'Sherman William', 'This is one is even longer more boring text', 'https://i.imgur.com/J5LVHEL.jpg');
+INSERT INTO books (title, authors, description, thumbnail, isbn, bookshelf) VALUES ('The way things aught to be', 'Sherman William', 'This is some long boring text', 'https://i.imgur.com/J5LVHEL.jpg', '1567921361', 'Biography & Autobiography');
+INSERT INTO books (title, authors, description, thumbnail, isbn, bookshelf) VALUES ('The way things aught to be 2', 'Sherman William', 'This is one is even longer more boring text', 'https://i.imgur.com/J5LVHEL.jpg', '1567921361', 'Biography & Autobiography');

@@ -53,14 +53,14 @@ function getOneBook(request, response){
 }
 
 function addBook(request, response){
-  console.log('ere')
-  let {title, authors, description, thumbnail} = request.body;
-  let sql = `INSERT INTO books (title, authors, description, thumbnail) VALUES ($1, $2, $3, $4) RETURNING id;`;
-  let safeValues = [title, authors, description, thumbnail];
+  // console.log('running addBook')
+  let {title, authors, description, thumbnail, isbn, bookshelf} = request.body;
+  let sql = `INSERT INTO books (title, authors, description, thumbnail, isbn, bookshelf) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`;
+  let safeValues = [title, authors, description, thumbnail, isbn, bookshelf];
   client.query(sql, safeValues)
     .then(results => {
       console.log(results.rows);
-      response.redirect(`/books/${id}`)
+      response.redirect(`/books/${results.rows[0].id}`)
     }).catch(error => console.error(error))
 }
 
@@ -97,6 +97,8 @@ function Book(info) {
   this.authors = info.authors ? info.authors : 'no authors available';
   this.description = info.description ? info.description : 'no description available';
   this.thumbnail = info.imageLinks.thumbnail ? info.imageLinks.thumbnail : placeholderImage;
+  this.isbn = info.industryIdentifiers[0].identifier ? info.industryIdentifiers[0].identifier : 'no isbn available';
+  this.bookshelf = info.categories ? info.categories : 'no categories available';
 }
 
 function updateBook(request, response){
@@ -105,17 +107,17 @@ function updateBook(request, response){
   let bookId = request.params.bookId;
 
   console.log('form information to be updated', request.body);
-  let { title, authors, description, thumbnail } = request.body;
+  let { title, authors, description, thumbnail, isbn, bookshelf } = request.body;
 
-  let sql = 'UPDATE tasks SET title=$1, authors=$2, description=$3, thumbnail=$4 WHERE bookId=$5;';
-  let safeValues = [title, authors, description, thumbnail, bookId];
+  let sql = 'UPDATE tasks SET title=$1, authors=$2, description=$3, thumbnail=$4, isbn=$5, bookshelf=$6, WHERE bookId=$7;';
+  let safeValues = [title, authors, description, thumbnail, bookId, isbn, bookshelf];
   // update the database with the new information
 
   client.query(sql, safeValues)
     .then(sqlResults => {
       // redirect to teh detail page with the new values
       response.redirect(`/tasks/${bookId}`);
-    })
+    }).catch(error => console.error(error))
 }
 
 function deleteBook(request, response){
@@ -123,9 +125,9 @@ function deleteBook(request, response){
   console.log('this is our params', request.params); //{ bookId: '3' }
   let bookId = request.params.bookId;
   console.log('form information to be updated', request.body);
-  let { title, authors, description, thumbnail } = request.body;
-  let sql = 'DELETE tasks SET title=$1, authors=$2, description=$3, thumbnail=$4 WHERE id=$5;';
-  let safeValues = [title, authors, description, thumbnail, bookId];
+  let { title, authors, description, thumbnail, isbn, bookshelf } = request.body;
+  let sql = 'DELETE tasks SET title=$1, authors=$2, description=$3, thumbnail=$4, isbn=$5, bookshelf=$6, WHERE bookId=$7;';
+  let safeValues = [title, authors, description, thumbnail, bookId, isbn, bookshelf];
   // update the database with the new information
 
   client.query(sql, safeValues)
@@ -133,10 +135,11 @@ function deleteBook(request, response){
       // redirect to teh detail page with the new values
       response.redirect('/');
     })
+    .catch(error => console.error(error))
 }
 
 const client = new pg.Client(process.env.DATABASE_URL);
 client.on('error', err => console.log(err));
-client.connect().then(() => {
-  app.listen(PORT, () => console.log(`heard on ${PORT}`));
-});
+client.connect()
+  .then(() => {app.listen(PORT, () => console.log(`heard on ${PORT}`));})
+  .catch(error => console.error(error));
