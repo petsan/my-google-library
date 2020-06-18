@@ -16,11 +16,11 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 
-app.get('/', getBooks); //app.get('/', getBooks); // rendering our home page which shows all our saved books from our database
-app.get('/add', showAddForm); //app.get('/add', showSearchForm); // shows our search form
-app.get('/books/:bookId', getOneBook); //app.get('/books/:id', getOneBook); // shows our detail page
-app.post('/add', addBook); // app.post('/details', addToFavorites); // takes form data from the API and adds a book to our database and then redirects to a detail page
-app.post('/searches', getBooksFromAPI); // takes in our search form information and displays our show.ejs page - results from our API
+app.get('/', getBooks); 
+app.get('/add', showAddForm); 
+app.get('/books/:bookId', getOneBook); 
+app.post('/add', addBook); 
+app.post('/searches', getBooksFromAPI); 
 app.get('/searches/new', getSearchForm);
 app.put('/update/:bookId', updateBook);
 app.delete('/delete/:bookId', deleteBook);
